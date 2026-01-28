@@ -22,6 +22,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 const TO_EMAIL = process.env.TO_EMAIL;           // your inbox
 const FROM_EMAIL = process.env.FROM_EMAIL;       // verified sender ideally
+const CLIENT_URL = process.env.CLIENT_URL;
 const SITE_URL = process.env.SITE_URL || "http://localhost:5500"; // your frontend URL
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
