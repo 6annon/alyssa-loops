@@ -1,0 +1,729 @@
+:root{
+  --bg: #ffdeea;          /* baby pink */
+  --bg2: #ffe6ef;         /* lighter pink */
+  --ink: #2b1b22;         /* deep cocoa */
+  --muted: rgba(43, 27, 34, .72);
+  --card: rgba(255, 255, 255, .65);
+  --card2: rgba(255, 255, 255, .8);
+  --border: rgba(43, 27, 34, .12);
+  --shadow: 0 18px 50px rgba(43, 27, 34, .18);
+  --radius: 22px;
+}
+
+*{ box-sizing: border-box; }
+html, body{ height: 100%; }
+body{
+  margin: 0;
+  background: radial-gradient(1200px 700px at 20% 10%, #fff 0%, var(--bg) 55%, #ffc3da 100%);
+  color: var(--ink);
+  font-family: "Playfair Display", serif;
+}
+
+a{ color: inherit; text-decoration: none; }
+img{ max-width: 100%; display: block; }
+
+.topbar{
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 16px 22px;
+  background: rgba(255, 255, 255, .55);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand{
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.logo{
+  width: 44px;
+  height: 44px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: rgba(255,255,255,.75);
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 25px rgba(43, 27, 34, .12);
+  font-size: 20px;
+}
+.brand-text h1{
+  margin: 0;
+  font-family: "Great Vibes", cursive;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 1;
+}
+.brand-text p{
+  margin: 4px 0 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.nav{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.nav a{
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  color: var(--muted);
+}
+.nav a:hover{
+  background: rgba(255,255,255,.55);
+  border-color: var(--border);
+  color: var(--ink);
+}
+
+.cart-btn{
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.7);
+  border-radius: 999px;
+  padding: 10px 12px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  cursor: pointer;
+}
+.badge{
+  min-width: 26px;
+  height: 22px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255, 214, 229, .75);
+}
+
+main{ padding: 22px; }
+
+/* ===== Category crumbs (Back to categories button) ===== */
+.category-crumbs{
+  max-width: 1180px;
+  margin: 16px auto 0 auto;
+  padding: 0 22px; /* aligns with main padding */
+}
+
+.category-crumbs a{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.65);
+  border-radius: 999px;
+  padding: 10px 14px;
+
+  color: var(--muted);
+  box-shadow: 0 10px 25px rgba(43, 27, 34, .10);
+
+  transition: transform .15s ease, background .15s ease, color .15s ease;
+}
+
+.category-crumbs a:hover{
+  background: rgba(255,255,255,.85);
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+
+.category-crumbs a:active{
+  transform: translateY(0);
+}
+
+.hero{
+  max-width: 1180px;
+  margin: 18px auto 0 auto;
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 22px;
+  align-items: stretch;
+}
+
+.hero-content{
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-content::after{
+  content: "";
+  position: absolute;
+  inset: -60px -80px auto auto;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.9), rgba(255, 214, 229, .2));
+  border-radius: 999px;
+  transform: rotate(12deg);
+}
+
+.hero-content h2{
+  margin: 0 0 10px 0;
+  font-family: "Great Vibes", cursive;
+  font-size: 56px;
+  font-weight: 400;
+  line-height: 1.05;
+}
+.hero-content p{
+  margin: 0 0 18px 0;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 52ch;
+}
+
+.hero-actions{
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+.btn{
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.75);
+  padding: 12px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 600;
+}
+.btn:hover{ transform: translateY(-1px); }
+.btn:active{ transform: translateY(0); }
+
+.btn.primary{
+  background: rgba(255, 255, 255, .95);
+  box-shadow: 0 16px 40px rgba(43, 27, 34, .18);
+}
+.btn.ghost{
+  background: rgba(255,255,255,.4);
+}
+.btn.small{
+  padding: 10px 14px;
+  font-size: 14px;
+}
+
+.trust{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.pill{
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.6);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.hero-image{
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  min-height: 320px;
+}
+.hero-image img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.section{
+  max-width: 1180px;
+  margin: 26px auto 0 auto;
+}
+.section.alt{
+  background: rgba(255,255,255,.35);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+}
+
+.section-head{
+  display: grid;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.section-head h3{
+  margin: 0;
+  font-family: "Great Vibes", cursive;
+  font-weight: 400;
+  font-size: 44px;
+}
+.section-head p{
+  margin: 0;
+  color: var(--muted);
+}
+
+.grid{
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.card{
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(43, 27, 34, .14);
+  display: grid;
+}
+.card-media{
+  position: relative;
+  height: 170px;
+}
+.card-media img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.tag{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(255,255,255,.75);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.card-body{
+  padding: 14px 14px 16px 14px;
+}
+.product-name{
+  margin: 0;
+  font-size: 18px;
+}
+.desc{
+  margin: 8px 0 12px 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+}
+.card-row{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.price{
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.two-col{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.bullets{
+  margin: 12px 0 0 18px;
+  color: var(--muted);
+}
+.bullets li{ margin: 8px 0; }
+
+.form{
+  background: rgba(255,255,255,.55);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+label{
+  display: grid;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+input, textarea{
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 12px 12px;
+  background: rgba(255,255,255,.8);
+  font-family: "Playfair Display", serif;
+  outline: none;
+}
+input:focus, textarea:focus{
+  border-color: rgba(43, 27, 34, .28);
+}
+.form-note{
+  margin: 10px 0 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.about{
+  display: grid;
+  grid-template-columns: .9fr 1.1fr;
+  gap: 18px;
+  align-items: center;
+}
+.about-img{
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  height: 340px;
+  width: 100%;
+  object-fit: cover;
+}
+.about-text p{
+  margin: 0 0 14px 0;
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 16px;
+}
+.stats{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.stat{
+  background: rgba(255,255,255,.55);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 12px;
+  text-align: center;
+}
+.stat-num{
+  display: block;
+  font-weight: 700;
+  font-size: 18px;
+}
+.stat-label{
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.contact{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.contact-card{
+  background: rgba(255,255,255,.55);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+.contact-card h4{
+  margin: 0 0 10px 0;
+  font-size: 18px;
+}
+.contact-card p{
+  margin: 8px 0;
+  color: var(--muted);
+}
+.tiny{
+  font-size: 12px;
+  color: rgba(43, 27, 34, .62);
+  margin-top: 10px;
+}
+
+.newsletter{
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+.newsletter input{ flex: 1; }
+
+.footer{
+  max-width: 1180px;
+  margin: 26px auto 22px auto;
+  padding: 14px 18px;
+  border-top: 1px solid var(--border);
+  color: rgba(43, 27, 34, .7);
+  text-align: center;
+}
+
+/* Drawer */
+.drawer{
+  position: fixed;
+  inset: 0;
+  display: none;
+  z-index: 50;
+}
+.drawer.open{ display: block; }
+.drawer-overlay{
+  position: absolute;
+  inset: 0;
+  background: rgba(43,27,34,.35);
+}
+.drawer-panel{
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: min(420px, 92vw);
+  background: rgba(255,255,255,.92);
+  border-left: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+.drawer-head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.drawer-head h3{
+  margin: 0;
+  font-family: "Great Vibes", cursive;
+  font-weight: 400;
+  font-size: 34px;
+}
+.icon-btn{
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.8);
+  border-radius: 14px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.drawer-body{
+  padding: 14px 16px;
+  overflow: auto;
+}
+.cart-items{
+  display: grid;
+  gap: 10px;
+}
+.cart-empty{
+  color: var(--muted);
+  padding: 18px 4px;
+}
+.cart-item{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  background: rgba(255,255,255,.75);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 12px;
+}
+.cart-item strong{ display: block; }
+.cart-item .sub{
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 4px;
+}
+.qty{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.qty button{
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.8);
+  border-radius: 12px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-weight: 700;
+}
+.drawer-foot{
+  border-top: 1px solid var(--border);
+  padding: 14px 16px;
+}
+.total-row{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 980px){
+  .hero{ grid-template-columns: 1fr; }
+  .grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .two-col{ grid-template-columns: 1fr; }
+  .about{ grid-template-columns: 1fr; }
+  .contact{ grid-template-columns: 1fr; }
+  .hero-content h2{ font-size: 48px; }
+}
+
+@media (max-width: 520px){
+  .grid{ grid-template-columns: 1fr; }
+  .brand-text h1{ font-size: 34px; }
+}
+
+/* Make linked cards feel consistent */
+.card-link{
+  cursor: pointer;
+  transition: transform .15s ease;
+}
+.card-link:hover{
+  transform: translateY(-2px);
+}
+.card-link .btn.small{
+  pointer-events: none;
+}
+
+/* ===== Turntable / Roundabout (WIDER + CENTER POP) ===== */
+.turntable{
+  background: rgba(255,255,255,.35);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: var(--shadow);
+}
+
+.tt-top{
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.tt-top h3{
+  margin: 0;
+  font-family: "Great Vibes", cursive;
+  font-weight: 400;
+  font-size: 44px;
+}
+.tt-top p{
+  margin: 0;
+  color: var(--muted);
+  max-width: 70ch;
+}
+
+.tt-ui{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+/* Wider stage */
+.tt-stage{
+  position: relative;
+  height: 460px;                 /* was smaller; now taller */
+  perspective: 1200px;
+  overflow: hidden;
+  border-radius: calc(var(--radius) - 6px);
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.25);
+}
+
+/* Optional: add soft vignette so center feels more "featured" */
+.tt-stage::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background: radial-gradient(circle at 50% 55%, rgba(255,255,255,.0), rgba(43,27,34,.10));
+}
+
+.tt-ring{
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 650ms cubic-bezier(.2,.9,.2,1);
+}
+
+/* Bigger cards */
+.tt-card{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(360px, 82vw);       /* wider card */
+  transform-style: preserve-3d;
+  transform: translate(-50%, -50%);
+  transition: transform 650ms cubic-bezier(.2,.9,.2,1), opacity 650ms ease;
+  opacity: .72;
+}
+
+/* Center pop */
+.tt-card.active{
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.08) translateY(-4px);
+}
+
+.tt-card .card{
+  box-shadow: 0 16px 40px rgba(43, 27, 34, .14);
+  transition: box-shadow 650ms cubic-bezier(.2,.9,.2,1);
+}
+
+.tt-card.active .card{
+  box-shadow: 0 26px 70px rgba(43, 27, 34, .20);
+}
+
+/* Nav */
+.tt-nav{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.tt-btn{
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.75);
+  border-radius: 999px;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-weight: 700;
+}
+.tt-btn:active{ transform: translateY(1px); }
+
+.tt-dots{
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.tt-dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.7);
+  cursor: pointer;
+}
+.tt-dot.active{
+  background: rgba(255, 214, 229, .95);
+}
+
+/* Slightly reduce size on small screens */
+@media (max-width: 520px){
+  .tt-stage{ height: 420px; }
+  .tt-card{ width: min(330px, 88vw); }
+}
+
+/* Turntable click fix: only the active (front) card should receive clicks */
+.tt-card{
+  pointer-events: none;
+}
+
+.tt-card.active{
+  pointer-events: auto;
+  z-index: 5;
+}
+
+/* If you have a stage overlay/vignette, make sure it can't block clicks */
+.tt-stage::after{
+  pointer-events: none;
+}

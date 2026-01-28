@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alyssa Loops • Decor</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a href="index.html#shop" class="brand">
+  <span class="logo">✿</span>
+  <div class="brand-text">
+    <h1>Alyssa Loops</h1>
+    <p>Handmade crochet • soft, cozy, custom</p>
+  </div>
+</a>
+
+
+    <nav class="nav">
+      <a href="index.html#shop">Shop</a>
+      <a href="index.html#custom">Custom Orders</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#contact">Contact</a>
+      <button class="cart-btn" id="cartBtn" type="button" aria-label="Open cart">
+        Cart <span class="badge" id="cartCount">0</span>
+      </button>
+    </nav>
+  </header>
+
+  <div class="category-crumbs">
+    <a href="index.html#shop">← Back to categories</a>
+  </div>
+
+  <main>
+    <section class="section">
+      <div class="turntable" data-turntable>
+        <div class="tt-top">
+          <div>
+            <h3>Decor</h3>
+            <p>Cozy home pieces that make a space feel sweet.</p>
+          </div>
+        </div>
+
+        <div class="tt-stage" aria-label="Decor carousel">
+          <div class="tt-ring">
+            <div class="tt-card">
+              <article class="card">
+                <div class="card-media">
+                  <img src="https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=1200&q=80" alt="Cozy Throw Blanket" loading="lazy" />
+                  <span class="tag">Popular</span>
+                </div>
+                <div class="card-body">
+                  <h4 class="product-name">Cozy Throw Blanket</h4>
+                  <p class="desc">Warm + textured + super soft.</p>
+                  <div class="card-row">
+                    <span class="price" data-price="149">$149</span>
+                    <button class="btn small" data-add="Cozy Throw Blanket" data-price="149">Add to cart</button>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <div class="tt-card">
+              <article class="card">
+                <div class="card-media">
+                  <img src="https://images.unsplash.com/photo-1542718610-a1d656d1884c?auto=format&fit=crop&w=1200&q=80" alt="Coaster Set" loading="lazy" />
+                  <span class="tag">Gift</span>
+                </div>
+                <div class="card-body">
+                  <h4 class="product-name">Coaster Set (4)</h4>
+                  <p class="desc">Cute table protection.</p>
+                  <div class="card-row">
+                    <span class="price" data-price="18">$18</span>
+                    <button class="btn small" data-add="Coaster Set (4)" data-price="18">Add to cart</button>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <div class="tt-card">
+              <article class="card">
+                <div class="card-media">
+                  <img src="https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=1200&q=80" alt="Wall Hanging" loading="lazy" />
+                  <span class="tag">New</span>
+                </div>
+                <div class="card-body">
+                  <h4 class="product-name">Wall Hanging</h4>
+                  <p class="desc">Soft textures for your space.</p>
+                  <div class="card-row">
+                    <span class="price" data-price="42">$42</span>
+                    <button class="btn small" data-add="Wall Hanging" data-price="42">Add to cart</button>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <div class="tt-card">
+              <article class="card">
+                <div class="card-media">
+                  <img src="https://images.unsplash.com/photo-1618331835717-801e976710b2?auto=format&fit=crop&w=1200&q=80" alt="Plant Pot Cozy" loading="lazy" />
+                  <span class="tag">Cute</span>
+                </div>
+                <div class="card-body">
+                  <h4 class="product-name">Plant Pot Cozy</h4>
+                  <p class="desc">A soft wrap for pots.</p>
+                  <div class="card-row">
+                    <span class="price" data-price="16">$16</span>
+                    <button class="btn small" data-add="Plant Pot Cozy" data-price="16">Add to cart</button>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+
+        <div class="tt-nav">
+          <button class="tt-btn" type="button" data-tt="prev" aria-label="Previous item">‹ Prev</button>
+          <div class="tt-dots" aria-label="Carousel dots"></div>
+          <button class="tt-btn" type="button" data-tt="next" aria-label="Next item">Next ›</button>
+        </div>
+
+        <div class="tt-ui">
+          <a class="btn ghost" href="index.html#custom">Request custom decor</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="Shopping cart">
+      <div class="drawer-head">
+        <h3>Your cart</h3>
+        <button class="icon-btn" id="closeDrawer" aria-label="Close cart">✕</button>
+      </div>
+      <div class="drawer-body">
+        <div id="cartItems" class="cart-items"></div>
+        <div class="cart-empty" id="cartEmpty">Your cart is empty. Add something cute ✿</div>
+      </div>
+      <div class="drawer-foot">
+        <div class="total-row">
+          <span>Total</span>
+          <strong id="cartTotal">$0</strong>
+        </div>
+        <button class="btn primary" id="checkoutBtn" type="button">Checkout</button>
+        <p class="tiny">Demo checkout (no payments).</p>
+      </div>
+    </div>
+  </aside>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> Alyssa Loops • Handmade with ♡</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
