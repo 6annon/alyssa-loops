@@ -10,7 +10,13 @@ const app = express();
 
 // IMPORTANT: Stripe webhook needs RAW body on its route.
 // So we mount json() AFTER the webhook route, and use express.raw() for webhook.
-app.use(cors({ origin: true }));
+app.use(cors({
+  origin: [
+    "https://ubiquitous-dango-f87547.netlify.app",
+    "http://localhost:5500",
+    "http://127.0.0.1:5500"
+  ],
+}));
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
