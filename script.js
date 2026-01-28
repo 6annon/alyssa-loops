@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:3000";
+const API_BASE = "https://alyssa-loops.onrender.com";
 
 const cartBtn = document.getElementById("cartBtn");
 const drawer = document.getElementById("drawer");
@@ -352,3 +352,4 @@ function initTurntable(root) {
 document.querySelectorAll("[data-turntable]").forEach(initTurntable);
 
 renderCart();
+
