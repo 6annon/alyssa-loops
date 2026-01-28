@@ -8,26 +8,38 @@ dotenv.config();
 
 const app = express();
 
-// IMPORTANT: Stripe webhook needs RAW body on its route.
-// So we mount json() AFTER the webhook route, and use express.raw() for webhook.
-app.use(cors({
-  origin: [
-    "https://ubiquitous-dango-f87547.netlify.app",
-    "http://localhost:5500",
-    "http://127.0.0.1:5500"
-  ],
-}));
+/* ======================
+   CORS
+====================== */
+app.use(
+  cors({
+    origin: [
+      "https://ubiquitous-dango-f87547.netlify.app",
+      "http://localhost:5500",
+      "http://127.0.0.1:5500",
+    ],
+  })
+);
 
+/* ======================
+   Services
+====================== */
 const resend = new Resend(process.env.RESEND_API_KEY);
-
-const TO_EMAIL = process.env.TO_EMAIL;           // your inbox
-const FROM_EMAIL = process.env.FROM_EMAIL;       // verified sender ideally
-const CLIENT_URL = process.env.CLIENT_URL;
-const SITE_URL = process.env.SITE_URL || "http://localhost:5500"; // your frontend URL
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-// Health
-app.get("/health", (req, res) => res.json({ ok: true }));
+/* ======================
+   Env
+====================== */
+const TO_EMAIL = process.env.TO_EMAIL;
+const FROM_EMAIL = process.env.FROM_EMAIL;
+const CLIENT_URL = process.env.CLIENT_URL; // ✅ ONLY frontend URL we use
+
+/* ======================
+   Health
+====================== */
+app.get("/health", (req, res) => {
+  res.json({ ok: true });
+});
 
 /* ======================
    Stripe webhook (RAW)
@@ -54,8 +66,8 @@ app.post(
       if (event.type === "checkout.session.completed") {
         const session = event.data.object;
 
-        // Pull details from session
-        const customerEmail = session.customer_details?.email || session.customer_email;
+        const customerEmail =
+          session.customer_details?.email || session.customer_email;
         const customerName = session.customer_details?.name || "Customer";
 
         const ship = session.shipping_details;
@@ -66,7 +78,6 @@ ${ship.address?.city || ""}, ${ship.address?.state || ""} ${ship.address?.postal
 ${ship.address?.country || ""}`
           : "No shipping address provided.";
 
-        // We stored cart in metadata as JSON string
         let cart = {};
         try {
           cart = JSON.parse(session.metadata?.cart_json || "{}");
@@ -78,9 +89,11 @@ ${ship.address?.country || ""}`
           .map((i) => `${i.qty}× ${i.name} — $${i.price}`)
           .join("\n");
 
-        const total = session.amount_total ? `$${(session.amount_total / 100).toFixed(2)}` : "(unknown)";
+        const total = session.amount_total
+          ? `$${(session.amount_total / 100).toFixed(2)}`
+          : "(unknown)";
 
-        // 1) Email to YOU (store owner)
+        // Email YOU
         await resend.emails.send({
           from: `Alyssa Loops <${FROM_EMAIL}>`,
           to: [TO_EMAIL],
@@ -90,12 +103,12 @@ ${ship.address?.country || ""}`
             `Customer: ${customerName}\n` +
             `Customer Email: ${customerEmail || "unknown"}\n\n` +
             `Shipping:\n${shippingText}\n\n` +
-            `Items:\n${items || "(no items in metadata)"}\n\n` +
+            `Items:\n${items || "(no items)"}\n\n` +
             `Stripe Session: ${session.id}\n` +
-            `— Alyssa Loops Website`
+            `— Alyssa Loops Website`,
         });
 
-        // 2) Confirmation email to CUSTOMER
+        // Email CUSTOMER
         if (customerEmail) {
           await resend.emails.send({
             from: `Alyssa Loops <${FROM_EMAIL}>`,
@@ -107,8 +120,8 @@ ${ship.address?.country || ""}`
               `Shipping to:\n${shippingText}\n\n` +
               `Your items:\n${items || "(items not available)"}\n\n` +
               `Total paid: ${total}\n\n` +
-              `If you need anything, reply to this email.\n` +
-              `— Alyssa Loops`
+              `If you need anything, just reply to this email.\n` +
+              `— Alyssa Loops`,
           });
         }
       }
@@ -116,12 +129,14 @@ ${ship.address?.country || ""}`
       res.json({ received: true });
     } catch (err) {
       console.error("WEBHOOK HANDLER ERROR:", err);
-      res.status(500).json({ received: true }); // acknowledge to Stripe even if email fails
+      res.json({ received: true });
     }
   }
 );
 
-// After webhook, now safe to parse JSON for normal routes
+/* ======================
+   JSON (after webhook)
+====================== */
 app.use(express.json());
 
 /* ======================
@@ -145,7 +160,7 @@ app.post("/api/contact", async (req, res) => {
         `Name: ${name}\n` +
         `Email: ${email}\n\n` +
         `Request:\n${details}\n\n` +
-        `— Alyssa Loops Website`
+        `— Alyssa Loops Website`,
     });
 
     res.json({ ok: true });
@@ -156,7 +171,7 @@ app.post("/api/contact", async (req, res) => {
 });
 
 /* ======================
-   Create Stripe Checkout Session
+   Create Stripe Checkout
 ====================== */
 app.post("/api/create-checkout-session", async (req, res) => {
   try {
@@ -166,41 +181,36 @@ app.post("/api/create-checkout-session", async (req, res) => {
       return res.status(400).json({ ok: false, error: "Cart empty" });
     }
 
-    // Convert cart into Stripe line items (prices are in cents)
     const line_items = Object.values(cart).map((i) => ({
       quantity: Number(i.qty) || 1,
       price_data: {
         currency: "usd",
-        product_data: {
-          name: i.name
-        },
-        unit_amount: Math.round(Number(i.price) * 100)
-      }
+        product_data: { name: i.name },
+        unit_amount: Math.round(Number(i.price) * 100),
+      },
     }));
 
-    // Store cart in metadata so webhook can email it later
     const cart_json = JSON.stringify(cart);
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       line_items,
       shipping_address_collection: {
-        allowed_countries: ["US"]
+        allowed_countries: ["US"],
       },
       phone_number_collection: { enabled: true },
 
-      success_url: `${SITE_URL}/success.html?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${SITE_URL}/cancel.html`,
+      // ✅ FIXED — NO LOCALHOST
+      success_url: `${CLIENT_URL}/success.html?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${CLIENT_URL}/cancel.html`,
 
-      metadata: {
-        cart_json
-      }
+      metadata: { cart_json },
     });
 
     res.json({ ok: true, url: session.url });
   } catch (err) {
     console.error("CREATE SESSION ERROR:", err);
-    res.status(500).json({ ok: false, error: "Failed to create session" });
+    res.status(500).json({ ok: false });
   }
 });
 
@@ -209,5 +219,5 @@ app.post("/api/create-checkout-session", async (req, res) => {
 ====================== */
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`API running on http://localhost:${PORT}`);
+  console.log(`API running on port ${PORT}`);
 });
